@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đơn Hàng Của Tôi - PC Shop</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="src/css/style.css">
+    <link rel="stylesheet" href="src/css/payment.css">
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
+    <script src="src/js/firebase-config.js"></script>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <div id="navbar-placeholder"></div>
+
+    <div class="orders-container">
+        <div class="section-title">
+            <h2>Đơn Hàng <span>Của Tôi</span></h2>
+        </div>
+
+        <!-- Login Required Notice -->
+        <div class="payment-card" id="login-notice" style="display: none; text-align: center;">
+            <i class="fas fa-user-lock" style="font-size: 3rem; color: var(--accent-color); margin-bottom: 20px;"></i>
+            <h3>Vui lòng đăng nhập</h3>
+            <p style="color: var(--text-muted); margin-bottom: 20px;">Bạn cần đăng nhập để xem lịch sử đơn hàng</p>
+            <a href="login.html" class="btn btn-primary">
+                <i class="fas fa-sign-in-alt"></i> Đăng Nhập
+            </a>
+        </div>
+
+        <!-- Orders List -->
+        <div id="orders-list">
+            <!-- Loading State -->
+            <div class="payment-card" id="loading-state" style="text-align: center;">
+                <div class="spinner" style="margin: 0 auto 20px;"></div>
+                <p style="color: var(--text-muted);">Đang tải đơn hàng...</p>
+            </div>
+        </div>
+
+        <!-- Empty State -->
+        <div class="empty-state" id="empty-state" style="display: none;">
+            <i class="fas fa-box-open"></i>
+            <h3>Chưa có đơn hàng nào</h3>
+            <p>Bạn chưa đặt đơn hàng nào. Hãy bắt đầu mua sắm!</p>
+            <a href="products.html" class="btn btn-primary">
+                <i class="fas fa-shopping-bag"></i> Mua Sắm Ngay
+            </a>
+        </div>
+    </div>
+
+    <script src="src/js/navbar.js"></script>
+    <script src="src/js/main.js"></script>
+    <script src="src/js/my-orders.js"></script>
+</body>
+
+</html>

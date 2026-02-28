@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PC Shop - Linh Kiện Máy Tính Cao Cấp</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="src/css/style.css">
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
+    <script src="src/js/firebase-config.js"></script>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <div id="navbar-placeholder"></div>
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="container hero-content">
+            <div>
+                <h1>Nâng Cấp Cấu Hình<br>Chinh Phục Đỉnh Cao</h1>
+                <p>Chuyên cung cấp linh kiện máy tính chính hãng, giá tốt nhất thị trường.</p>
+                <a href="products.html" class="btn btn-primary">Mua Ngay <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container" id="products">
+        <div class="section-title">
+            <h2>Sản Phẩm <span>Mới Nhất</span></h2>
+        </div>
+
+        <div class="products-grid" id="products-list">
+            <!-- Products will be loaded here via JS -->
+            <div style="grid-column: 1/-1; text-align: center; padding: 50px;">
+                <i class="fas fa-spinner fa-spin fa-2x"></i>
+                <p style="margin-top: 10px;">Đang tải sản phẩm...</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>PC Shop</h3>
+                    <p style="color: var(--text-muted);">Địa chỉ tin cậy cho mọi nhu cầu về máy tính và linh kiện công
+                        nghệ cao.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Liên Kết</h3>
+                    <a href="index.html">Trang Chủ</a>
+                    <a href="products.html">Sản Phẩm</a>
+                    <a href="javascript:void(0)">Chính Sách Bảo Hành</a>
+                    <a href="javascript:void(0)">Liên Hệ</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Theo Dõi</h3>
+                    <a href="javascript:void(0)"><i class="fab fa-facebook"></i> Facebook</a>
+                    <a href="javascript:void(0)"><i class="fab fa-instagram"></i> Instagram</a>
+                    <a href="javascript:void(0)"><i class="fab fa-youtube"></i> Youtube</a>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2026 PC Shop. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Chatbot Container -->
+    <div id="chatbot-container"></div>
+
+    <!-- Main Logic -->
+    <script src="src/js/navbar.js"></script>
+    <script src="src/js/main.js"></script>
+    <script src="src/js/chatbot.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giỏ Hàng - PC Shop</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="src/css/style.css">
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
+    <script src="src/js/firebase-config.js"></script>
+</head>
+
+<body>
+    <div id="navbar-placeholder"></div>
+
+    <div class="container" style="margin-top: 50px;">
+        <h2 style="margin-bottom: 30px;">Giỏ Hàng Của Bạn</h2>
+
+        <div class="table-container">
+            <table id="cart-table">
+                <thead>
+                    <tr>
+                        <th>Sản Phẩm</th>
+                        <th>Giá</th>
+                        <th>Số Lượng</th>
+                        <th>Tổng</th>
+                        <th>Hành Động</th>
+                    </tr>
+                </thead>
+                <tbody id="cart-body">
+                    <!-- JS fills this -->
+                </tbody>
+            </table>
+        </div>
+
+        <div style="margin-top: 30px; display: flex; justify-content: flex-end; align-items: center; gap: 20px;">
+            <div style="font-size: 1.5rem; font-weight: bold;">
+                Tổng Tiền: <span id="cart-total" style="color: var(--accent-color);">0 ₫</span>
+            </div>
+            <button class="btn btn-primary" onclick="window.location.href='checkout.html'">Thanh Toán Ngay</button>
+        </div>
+    </div>
+
+    <!-- Chatbot Container -->
+    <div id="chatbot-container"></div>
+
+    <script src="src/js/navbar.js"></script>
+    <script src="src/js/main.js"></script>
+    <script src="src/js/chatbot.js"></script>
+    <script>
+        // Cart specific logic
+        function renderCartPage() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const tbody = document.getElementById('cart-body');
+            const totalEl = document.getElementById('cart-total');
+
+            tbody.innerHTML = '';
+            let total = 0;
+
+            if (cart.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align: center;">Giỏ hàng trống.</td></tr>';
+                totalEl.innerText = '0 ₫';
+                return;
+            }
+
+            cart.forEach((item, index) => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td style="font-weight: 600;">${item.name}</td>
+                    <td>${new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(item.price)}</td>
+                    <td>
+                        <button class="btn" style="padding: 2px 8px; background: #333;" onclick="changeQty(${index}, -1)">-</button>
+                        <span style="margin: 0 10px;">${item.quantity}</span>
+                        <button class="btn" style="padding: 2px 8px; background: #333;" onclick="changeQty(${index}, 1)">+</button>
+                    </td>
+                    <td>${new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(itemTotal)}</td>
+                    <td><button class="action-btn delete-btn" onclick="removeFromCart(${index})"><i class="fas fa-trash"></i></button></td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            totalEl.innerText = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(total);
+        }
+
+        window.changeQty = (index, delta) => {
+            let cart = JSON.parse(localStorage.getItem('cart'));
+            cart[index].quantity += delta;
+            if (cart[index].quantity < 1) cart[index].quantity = 1;
+            localStorage.setItem('cart', JSON.stringify(cart));
+            renderCartPage();
+            updateCartCount(); // from main.js
+        };
+
+        window.removeFromCart = (index) => {
+            let cart = JSON.parse(localStorage.getItem('cart'));
+            cart.splice(index, 1);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            renderCartPage();
+            updateCartCount();
+        };
+
+        renderCartPage();
+    </script>
+</body>
+
+</html>

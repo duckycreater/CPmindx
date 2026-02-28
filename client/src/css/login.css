@@ -1,0 +1,111 @@
+body {
+    background: url('../asset/images (1).jpg') no-repeat center center fixed;
+    background-size: cover;
+    font-family: 'Poppins', sans-serif; 
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow: hidden; 
+}
+
+
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: -1;
+}
+
+#signup_box {
+    width: 100%;
+    max-width: 400px;
+    padding: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    background: rgba(0, 0, 0, 0.6);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px); 
+    
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    color: #fff;
+}
+
+#signup_box h2 {
+    text-align: center;
+    color: #fff;
+    margin-bottom: 30px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+
+.form-control {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    border-radius: 8px;
+    padding: 12px 15px;
+}
+
+.form-control:focus {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: #fff;
+    box-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+.form-control::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+
+.btn-primary {
+    background: linear-gradient(45deg, #007bff, #0056b3);
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(45deg, #0056b3, #004494);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 91, 187, 0.4);
+}
+
+.alrhaveacc {
+    text-align: center;
+    margin-top: 25px;
+    font-size: 0.9rem;
+}
+
+.alrhaveacc a {
+    color: #fff;
+    font-weight: 600;
+    transition: color 0.3s;
+}
+
+.alrhaveacc a:hover {
+    color: #ccc;
+    text-decoration: underline !important;
+    
+}
+img {
+    position: fixed;
+    top: 25px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: auto;
+    opacity: 0.8;
+    z-index: 10;
+    filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.5));
+    transition: all 0.3s ease;
+    animation: float 3s ease-in-out infinite;
+}

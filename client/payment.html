@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thanh Toán - PC Shop</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="src/css/style.css">
+    <link rel="stylesheet" href="src/css/payment.css">
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
+    <script src="src/js/firebase-config.js"></script>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <div id="navbar-placeholder"></div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loading-overlay">
+        <div class="spinner"></div>
+        <p>Đang tải thông tin đơn hàng...</p>
+    </div>
+
+    <div class="payment-container">
+        <div class="payment-header">
+            <h1><i class="fas fa-credit-card"></i> Thanh Toán</h1>
+            <p>Hoàn tất thanh toán để xác nhận đơn hàng</p>
+        </div>
+
+        <div class="payment-card">
+            <!-- Order Summary -->
+            <div class="order-summary">
+                <h3><i class="fas fa-shopping-bag"></i> Đơn Hàng #<span id="order-id-display">---</span></h3>
+                <div id="order-items-list">
+                    <!-- Items rendered by JS -->
+                </div>
+                <div class="order-total">
+                    <span>Tổng thanh toán:</span>
+                    <span id="order-total-amount">0 ₫</span>
+                </div>
+            </div>
+
+            <!-- Shipping Info -->
+            <div class="shipping-info">
+                <h4><i class="fas fa-truck"></i> Thông Tin Giao Hàng</h4>
+                <div class="shipping-detail">
+                    <i class="fas fa-user"></i>
+                    <span id="ship-name-display">---</span>
+                </div>
+                <div class="shipping-detail">
+                    <i class="fas fa-phone"></i>
+                    <span id="ship-phone-display">---</span>
+                </div>
+                <div class="shipping-detail">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span id="ship-address-display">---</span>
+                </div>
+                <div class="shipping-detail" id="ship-note-container" style="display: none;">
+                    <i class="fas fa-sticky-note"></i>
+                    <span id="ship-note-display">---</span>
+                </div>
+            </div>
+
+            <!-- Payment Method Display -->
+            <div class="payment-method-display" id="payment-method-display">
+                <i class="fas fa-money-bill-wave"></i>
+                <div class="method-info">
+                    <h4 id="method-title">Thanh toán khi nhận hàng (COD)</h4>
+                    <p id="method-desc">Thanh toán bằng tiền mặt khi nhận hàng</p>
+                </div>
+            </div>
+
+            <!-- COD Payment Section -->
+            <div class="cod-section" id="cod-section">
+                <div class="cod-icon">
+                    <i class="fas fa-hand-holding-usd"></i>
+                </div>
+                <h3>Thanh Toán Khi Nhận Hàng</h3>
+                <p>Bạn sẽ thanh toán <strong id="cod-amount">0 ₫</strong> cho nhân viên giao hàng khi nhận được sản
+                    phẩm.</p>
+            </div>
+
+            <!-- QR Payment Section -->
+            <div class="qr-section" id="qr-section" style="display: none;">
+                <h3><i class="fas fa-qrcode"></i> Quét Mã QR Để Thanh Toán</h3>
+
+                <div class="countdown-timer" id="countdown-timer">
+                    <i class="fas fa-clock"></i>
+                    <span>Thời gian còn lại: <span id="countdown">15:00</span></span>
+                </div>
+
+                <div class="qr-code-container">
+                    <img id="qr-code-img" src="" alt="QR Code Thanh Toán">
+                </div>
+
+                <p style="color: var(--text-muted); margin-bottom: 20px;">Sử dụng ứng dụng ngân hàng hoặc ví điện tử để
+                    quét mã QR</p>
+
+                <div class="bank-info">
+                    <div class="bank-info-row">
+                        <span>Ngân hàng:</span>
+                        <span id="bank-name">MB Bank</span>
+                    </div>
+                    <div class="bank-info-row">
+                        <span>Số tài khoản:</span>
+                        <span>
+                            <span id="bank-account">0123456789</span>
+                            <button class="copy-btn" onclick="copyToClipboard('bank-account')">
+                                <i class="fas fa-copy"></i> Copy
+                            </button>
+                        </span>
+                    </div>
+                    <div class="bank-info-row">
+                        <span>Chủ tài khoản:</span>
+                        <span id="bank-holder">PC SHOP</span>
+                    </div>
+                    <div class="bank-info-row">
+                        <span>Số tiền:</span>
+                        <span id="bank-amount">0 ₫</span>
+                    </div>
+                    <div class="bank-info-row">
+                        <span>Nội dung CK:</span>
+                        <span>
+                            <span id="transfer-content">DH123456</span>
+                            <button class="copy-btn" onclick="copyToClipboard('transfer-content')">
+                                <i class="fas fa-copy"></i> Copy
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="payment-actions">
+                <button class="btn btn-secondary" onclick="window.location.href='cart.html'">
+                    <i class="fas fa-arrow-left"></i> Quay Lại
+                </button>
+                <button class="btn btn-success" id="confirm-btn" onclick="confirmPayment()">
+                    <i class="fas fa-check"></i> <span id="confirm-btn-text">Xác Nhận Đặt Hàng</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="src/js/navbar.js"></script>
+    <script src="src/js/main.js"></script>
+    <script src="src/js/payment.js"></script>
+</body>
+
+</html>

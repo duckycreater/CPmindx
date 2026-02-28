@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sản Phẩm - PC Shop</title>
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- CSS -->
+    <link rel="stylesheet" href="src/css/style.css">
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
+    <script src="src/js/firebase-config.js"></script>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <div id="navbar-placeholder"></div>
+
+    <div class="container" style="margin-top: 40px; display: flex; gap: 30px;">
+
+        <!-- Filter Sidebar -->
+        <aside style="width: 250px; flex-shrink: 0;">
+            <div class="card" style="position: sticky; top: 100px;">
+                <h3 style="margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;">Bộ
+                    Lọc</h3>
+
+                <div class="form-group">
+                    <label>Tìm kiếm</label>
+                    <input type="text" id="search-input" placeholder="Tên sản phẩm..." style="width: 100%;">
+                </div>
+
+                <div class="form-group">
+                    <label>Danh Mục</label>
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                        <label style="cursor: pointer;"><input type="radio" name="category" value="all" checked> Tất
+                            cả</label>
+                        <label style="cursor: pointer;"><input type="radio" name="category" value="laptop">
+                            Laptop</label>
+                        <label style="cursor: pointer;"><input type="radio" name="category" value="cpu"> CPU</label>
+                        <label style="cursor: pointer;"><input type="radio" name="category" value="gpu"> VGA</label>
+                        <label style="cursor: pointer;"><input type="radio" name="category" value="ram"> RAM</label>
+                        <label style="cursor: pointer;"><input type="radio" name="category" value="mainboard">
+                            Mainboard</label>
+                        <hr style="border-color: #333; margin: 10px 0;">
+                        <label style="cursor: pointer; color: var(--accent-color); font-weight: 500;">Gaming
+                            Gear</label>
+                        <label style="cursor: pointer;"><input type="radio" name="category" value="mouse"> Chuột</label>
+                        <label style="cursor: pointer;"><input type="radio" name="category" value="keyboard"> Bàn
+                            Phím</label>
+                        <label style="cursor: pointer;"><input type="radio" name="category" value="headset"> Tai
+                            Nghe</label>
+                        <label style="cursor: pointer;"><input type="radio" name="category" value="monitor"> Màn
+                            Hình</label>
+                        <label style="cursor: pointer;"><input type="radio" name="category" value="storage">
+                            SSD/HDD</label>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" style="width: 100%;" onclick="applyFilters()">Áp Dụng</button>
+            </div>
+        </aside>
+
+        <!-- Product Grid -->
+        <main style="flex-grow: 1;">
+            <div class="section-title" style="text-align: left;">
+                <h2>Danh Sách <span>Sản Phẩm</span></h2>
+            </div>
+
+            <div class="products-grid" id="products-list">
+                <!-- Loaded via JS -->
+                <p>Đang tải...</p>
+            </div>
+        </main>
+
+    </div>
+
+    <!-- Chatbot Container -->
+    <div id="chatbot-container"></div>
+
+    <script src="src/js/navbar.js"></script>
+    <script src="src/js/main.js"></script>
+    <script src="src/js/chatbot.js"></script>
+    <script>
+        // Inline script for filtering logic reusing main.js functions if possible, 
+        // effectively extending main.js logic for this specific page.
+        // Or we might move this to a src/js/products.js file if it gets complex.
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Re-fetch products with filter capability
+            const searchInput = document.getElementById('search-input');
+            const radios = document.getElementsByName('category');
+
+            window.applyFilters = async () => {
+                const keyword = searchInput.value.toLowerCase();
+                let category = 'all';
+                for (const r of radios) if (r.checked) category = r.value;
+
+                const list = document.getElementById('products-list');
+                list.innerHTML = '<p>Đang tìm kiếm...</p>';
+
+                const snapshot = await db.collection('products').get();
+                list.innerHTML = '';
+
+                snapshot.forEach(doc => {
+                    const p = doc.data();
+                    const matchesKeyword = p.name.toLowerCase().includes(keyword);
+                    const matchesCategory = category === 'all' || p.category === category;
+
+                    if (matchesKeyword && matchesCategory) {
+                        const card = document.createElement('div');
+                        card.className = 'product-card';
+                        card.innerHTML = `
+                            <img src="${p.image}" alt="${p.name}" class="product-image">
+                            <div class="product-info">
+                                <div class="product-category">${p.category}</div>
+                                <h3 class="product-title">${p.name}</h3>
+                                <div class="product-price">${new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(p.price)}</div>
+                                <button class="btn btn-primary add-to-cart-btn" onclick="addToCart('${doc.id}', '${p.name}', ${p.price})">Add to Cart</button>
+                            </div>
+                        `;
+                        list.appendChild(card);
+                    }
+                });
+
+                if (list.children.length === 0) list.innerHTML = '<p>Không tìm thấy sản phẩm nào.</p>';
+            };
+        });
+    </script>
+</body>
+
+</html>

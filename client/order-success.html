@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đặt Hàng Thành Công - PC Shop</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="src/css/style.css">
+    <link rel="stylesheet" href="src/css/payment.css">
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
+    <script src="src/js/firebase-config.js"></script>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <div id="navbar-placeholder"></div>
+
+    <div class="success-container">
+        <div class="success-card">
+            <div class="success-checkmark">
+                <i class="fas fa-check"></i>
+            </div>
+
+            <h1>Đặt Hàng Thành Công!</h1>
+            <p>Cảm ơn bạn đã mua sắm tại PC Shop. Đơn hàng của bạn đã được xác nhận và sẽ sớm được xử lý.</p>
+
+            <div class="order-code">
+                <span>Mã đơn hàng của bạn</span>
+                <strong id="success-order-id">---</strong>
+            </div>
+
+            <p style="font-size: 0.9rem;">
+                Bạn có thể theo dõi trạng thái đơn hàng trong phần <strong>"Đơn hàng của tôi"</strong>
+            </p>
+
+            <div class="success-actions">
+                <a href="index.html" class="btn btn-secondary">
+                    <i class="fas fa-home"></i> Về Trang Chủ
+                </a>
+                <a href="my-orders.html" class="btn btn-primary">
+                    <i class="fas fa-box"></i> Xem Đơn Hàng
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="src/js/navbar.js"></script>
+    <script src="src/js/main.js"></script>
+    <script>
+        // Get order ID from URL and display
+        const urlParams = new URLSearchParams(window.location.search);
+        const orderId = urlParams.get('orderId');
+        if (orderId) {
+            document.getElementById('success-order-id').textContent = orderId.substring(0, 10).toUpperCase();
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="src/css/login.css">
+
+    <title>LOGIN</title>
+</head>
+
+<body>
+    <div class="overlay d-flex justify-content-center align-items-center min-vh-100">
+        <div id="signup_box">
+
+            <h2 class="mb-4">Login</h2>
+            <form onsubmit="return false;" class="form-floating">
+
+                <div class="mb-3">
+                    <input type="email" class="form-control" placeholder="Email" required id="email">
+                </div>
+                <div class="mb-3">
+                    <input type="password" class="form-control" placeholder="Password" required id="password">
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100">Login</button>
+
+                <div class="text-center my-3">
+                    <span class="text-white">Or login with</span>
+                </div>
+                <div class="d-flex gap-2 mb-3">
+                    <button type="button" class="btn btn-light w-50" id="google-login-btn">
+                        <i class="fab fa-google text-danger"></i> Google
+                    </button>
+                    <button type="button" class="btn btn-light w-50" id="github-login-btn">
+                        <i class="fab fa-github"></i> GitHub
+                    </button>
+                </div>
+            </form>
+            <div class="alrhaveacc">
+                <p class="text-white">Don't have account? <a class="text-white fw-bold text-decoration-none"
+                        href="register.html">Sign up</a></p>
+            </div>
+        </div>
+    </div>
+    <img src="src/asset/unnamed (2).jpg" alt="logo">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Firebase -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/12.3.0/firebase-app-compat.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/12.3.0/firebase-auth-compat.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/12.3.0/firebase-firestore-compat.min.js"></script>
+
+    <script src="src/js/firebase-config.js"></script>
+    <script src="src/js/login.js"></script>
+</body>
+
+</html>

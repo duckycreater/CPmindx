@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thanh Toán - PC Shop</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="src/css/style.css">
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
+    <script src="src/js/firebase-config.js"></script>
+</head>
+
+<body>
+    
+
+    <!-- Navbar Placeholder -->
+    <div id="navbar-placeholder"></div>
+
+    <div class="container" style="margin-top: 40px;">
+        <div class="section-title">
+            <h2>Thanh Toán <span>Đơn Hàng</span></h2>
+        </div>
+
+        <div class="" style="display: grid; grid-template-columns: 2fr 1fr; gap: 30px;">
+
+            <!-- Shipping Form -->
+            <div class="card">
+                <h3 style="margin-bottom: 20px;">Thông Tin Giao Hàng</h3>
+                <form id="checkout-form" onsubmit="return false;">
+                    <div class="form-group">
+                        <label>Họ và Tên</label>
+                        <input type="text" id="ship-name" required placeholder="Nguyễn Văn A">
+                    </div>
+                    <div class="form-group">
+                        <label>Số Điện Thoại</label>
+                        <input type="tel" id="ship-phone" required placeholder="0987654321">
+                    </div>
+                    <div class="form-group">
+                        <label>Địa Chỉ Nhận Hàng</label>
+                        <input type="text" id="ship-address" required placeholder="Số nhà, đường, phường, quận...">
+                    </div>
+                    <div class="form-group">
+                        <label>Ghi Chú (Tùy chọn)</label>
+                        <textarea id="ship-note" rows="3" placeholder="Giao giờ hành chính..."></textarea>
+                    </div>
+
+                    <h3 style="margin-top: 30px; margin-bottom: 20px;">Phương Thức Thanh Toán</h3>
+                    <div class="form-group">
+                        <label
+                            style="cursor: pointer; display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                            <input type="radio" name="payment" value="cod" checked>
+                            <span><i class="fas fa-money-bill-wave" style="color: var(--accent-color);"></i> Thanh toán
+                                khi nhận hàng (COD)</span>
+                        </label>
+                        <label style="cursor: pointer; display: flex; align-items: center; gap: 10px;">
+                            <input type="radio" name="payment" value="banking">
+                            <span><i class="fas fa-university" style="color: var(--accent-color);"></i> Chuyển khoản
+                                ngân hàng</span>
+                        </label>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Order Summary -->
+            <div>
+                <div class="card" style="position: sticky; top: 100px;">
+                    <h3 style="margin-bottom: 20px;">Đơn Hàng Của Bạn</h3>
+                    <div id="order-items"
+                        style="max-height: 300px; overflow-y: auto; margin-bottom: 20px; padding-right: 5px;">
+                        <!-- Items rendered here -->
+                        <p>Đang tải...</p>
+                    </div>
+
+                    <div style="border-top: 1px solid var(--border-color); padding-top: 15px; margin-top: 15px;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                            <span>Tạm tính:</span>
+                            <span id="subtotal-price">0 ₫</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                            <span>Phí vận chuyển:</span>
+                            <span>Miễn phí</span>
+                        </div>
+                        <div
+                            style="display: flex; justify-content: space-between; font-size: 1.2rem; font-weight: bold; color: var(--accent-color);">
+                            <span>Tổng cộng:</span>
+                            <span id="final-total">0 ₫</span>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary" style="width: 100%; margin-top: 20px; padding: 15px;"
+                        onclick="placeOrder()">
+                        ĐẶT HÀNG NGAY
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Chatbot -->
+    <div id="chatbot-container"></div>
+
+    <script src="src/js/navbar.js"></script>
+    <script src="src/js/main.js"></script>
+    <script src="src/js/checkout.js"></script>
+    <script src="src/js/chatbot.js"></script>
+</body>
+
+</html>
